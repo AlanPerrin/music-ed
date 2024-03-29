@@ -1,0 +1,39 @@
+(in-package #:music-ed)
+
+(defun menu (app)
+ ; (defparameter box nil)
+  (let ((window (gir:invoke (*gtk* "ApplicationWindow" 'new) app))
+	(GCSE (gir:invoke (*gtk* "Button" 'new-with-label) "GCSE"))
+	(ALEVEL (gir:invoke (*gtk* "Button" 'new-with-label) "A Level"))
+	(label (gir:invoke (*gtk* "Label"  'new) "Please select what level of music you are studying"))
+	(box (gir:invoke (*gtk* "Box" 'new) 1 6 ))
+	)
+;window
+    (setf(window-title window)"Main Menu")
+    (setf (widget-size-request window ) '(500 300))
+    
+;buttons
+    (gir:connect GCSE :clicked
+		 (lambda (button)
+		   (declare (ignore button))
+			    (gcse-menu)))
+
+    (gir:connect ALEVEL :clicked
+                 (lambda (button)
+		   (declare (ignore button))
+                   (print "A Level")))
+
+    
+    
+;label
+    (setf (gir:property label 'margin-top)74)
+    
+;packing 
+
+    (box-append box label)
+    (box-append box GCSE)
+    (box-append box ALEVEL)
+    ;Add the box to window
+    (gir:invoke (window 'set-child) box)
+    ;;show the window
+    (gir:invoke (window 'show))))

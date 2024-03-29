@@ -1,0 +1,4 @@
+;;;; package.lisp
+
+(defpackage #:music-ed
+  (:use #:cl))
