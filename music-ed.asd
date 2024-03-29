@@ -6,9 +6,18 @@
   :license  "Specify license here"
   :version "0.0.1"
   :serial t
-  :depends-on (#:cl-gtk4)
+  :depends-on (#:cl-gtk4
+	       #:cl-csv
+	       #:alexandria
+	       #:cl-mixed-mpg123)
+
   :components ((:file "package")
+	       (:file "playtracks")
 	       (:file "gcse-menu")
 	       (:file "menu")
 	       (:file "interval-questions")
-               (:file "music-ed")))
+               (:file "music-ed")
+	       (:module "questions")
+	;	:components
+	;	((:file "question1.csv")))
+	       ))
