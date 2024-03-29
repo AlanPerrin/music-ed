@@ -10,16 +10,13 @@
 ;window
     (setf(window-title window)"Main Menu")
     (setf (widget-size-request window ) '(500 300))
-;; Define a function to close the previous window
-    (defun close-previous-window ()
-      (when *previous-window*
-        (gir:invoke (*previous-window* 'destroy))))
+
     
 
     ;; Define function to handle opening new window
     (defun handle-open-new-window (button)
       (declare (ignore button))
-      (open-new-window app))
+      (gcse-menu app))
     ;; Connect button signals
     (gir:connect GCSE :clicked #'handle-open-new-window)
 

@@ -10,5 +10,5 @@
   :components ((:file "package")
 	       (:file "gcse-menu")
 	       (:file "menu")
-	   ;    (:file "interval-questions")
+	       (:file "interval-questions")
                (:file "music-ed")))
