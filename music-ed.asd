@@ -8,14 +8,21 @@
   :serial t
   :depends-on (#:cl-gtk4
 	       #:cl-csv
-	      ; #:cl-mpg123
 	       #:alexandria
-	       #:harmony)
+	       #:cl-mpg123
+	       #:cl-out123
+	  ;     #:cl-gstreamer
+	  ;     #:harmony
+	    ;   #+linux #:cl-mixed-pulse
+	   ;    #+windows #:cl-mixed-wasapi
+	     ;  #:cl-mpg123
+		)
 
   :components ((:file "package")
-	       (:file "playtracks")
+	      ; (:file "playtracks")
 	       (:file "gcse-menu")
 	       (:file "menu")
+	       (:file "audio-player")
 	       (:file "interval-questions")
                (:file "music-ed")
 	       (:module "questions")

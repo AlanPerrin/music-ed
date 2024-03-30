@@ -23,9 +23,11 @@
 (defparameter qWans nil)
 
 ;; Define a function to play an MP3 track
-(defparameter *mytest* "questions/Track-91.mp3")
-(defun play-mp3 ()
-  (print (parse-namestring (concatenate 'string ftrack "Track 91" ".mp3"))))
+(defparameter *mytest*  (format nil "~aquestions/Track 91.mp3" (uiop:getcwd)))
+
+
+;; Play the MP3 file
+
 
 
 (defun M-server ()

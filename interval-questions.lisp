@@ -10,6 +10,7 @@
   (let ((intervalQs-win (gir:invoke (*gtk* "ApplicationWindow" 'new) app))
 	(hbox (gir:invoke (*gtk* "Box" 'new) 0 6 ))
 	(box (gir:invoke (*gtk* "Box" 'new) 1 6 ))
+	(media (gir:invoke (*gtk* "MediaControls" 'new)))
 	(separator (gir:invoke (*gtk* "Separator" 'new)0))
 	(play-button (gir:invoke (*gtk* "Button" 'new-with-label) "Play"))
 	(question (gir:invoke (*gtk* "Label" 'new)*question-text*))
@@ -33,6 +34,7 @@
 ;boxing
     (box-append hbox question)
     (box-append hbox play-button)
+    (box-append box media)
     (box-append box hbox)
     (box-append box separator)
     (box-append box check1)
