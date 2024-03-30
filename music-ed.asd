@@ -8,8 +8,9 @@
   :serial t
   :depends-on (#:cl-gtk4
 	       #:cl-csv
+	      ; #:cl-mpg123
 	       #:alexandria
-	       #:cl-mixed-mpg123)
+	       #:harmony)
 
   :components ((:file "package")
 	       (:file "playtracks")

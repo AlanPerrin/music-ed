@@ -22,13 +22,20 @@
 (defparameter qRans nil)
 (defparameter qWans nil)
 
+;; Define a function to play an MP3 track
+(defparameter *mytest* "questions/Track-91.mp3")
+(defun play-mp3 ()
+  (print (parse-namestring (concatenate 'string ftrack "Track 91" ".mp3"))))
+
+
 (defun M-server ()
     (org.shirakumo.fraf.harmony:maybe-start-simple-server)
     (incf cms))
 
 (defun servercheck ()
     (if (= 0 CMS )
-	(m-server)))
+	(m-server)
+	(print"server is running")))
 
 (defun PlayTrack ()
     (servercheck)

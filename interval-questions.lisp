@@ -5,22 +5,37 @@
 (defun interval-questions (app)
 ;; Close the previous window
   (close-previous-window)
-;;make a new window
+  ;;make a new window
+  (question-template)
   (let ((intervalQs-win (gir:invoke (*gtk* "ApplicationWindow" 'new) app))
+	(hbox (gir:invoke (*gtk* "Box" 'new) 0 6 ))
 	(box (gir:invoke (*gtk* "Box" 'new) 1 6 ))
+	(separator (gir:invoke (*gtk* "Separator" 'new)0))
+	(play-button (gir:invoke (*gtk* "Button" 'new-with-label) "Play"))
 	(question (gir:invoke (*gtk* "Label" 'new)*question-text*))
+	(check1 (gir:invoke (*gtk* "CheckButton" 'new-with-label) "option 1"))
 	)
     
     (setf (window-title intervalQs-win) "Inverval Questions")
-    (setf (widget-size-request intervalQs-win) '(500 500))
+    (setf (widget-size-request intervalQs-win) '(700 500))
 
     ;Quesiton
-    (setf (gir:property question 'margin-top)15)
+    (setf (gir:property question 'margin-top)20
+	  (gir:property question 'margin-start)100)
+    (setf (gir:property play-button 'margin-top)20)
 
-
+    ;Button
+    (gir:connect play-button :clicked
+                 (lambda (button)
+		   (declare (ignore button))
+                   (print "test")))
 
 ;boxing
-    (box-append box question)
+    (box-append hbox question)
+    (box-append hbox play-button)
+    (box-append box hbox)
+    (box-append box separator)
+    (box-append box check1)
 
 ;setting window
     (gir:invoke (intervalQs-win 'set-child) box)
@@ -57,7 +72,7 @@
 
 (defun question-template ()
     (setf *Q1* 0)
-    (setf *my-data* (cdr(cl-csv:read-csv #P"music-ed/questions/Question1.csv")))
+    (setf *my-data* (cdr(cl-csv:read-csv #P"questions/Question1.csv")))
     (My-list)
     (setf *Question-Text* (car (nth *right-ans* *my-data*)))
     (setf *ans-list* (alexandria:flatten(list qrans(loop :for i :below 3 :collect (nth i qwans)))))
