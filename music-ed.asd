@@ -19,7 +19,7 @@
 		)
 
   :components ((:file "package")
-	      ; (:file "playtracks")
+	       (:file "playtracks")
 	       (:file "gcse-menu")
 	       (:file "menu")
 	       (:file "audio-player")

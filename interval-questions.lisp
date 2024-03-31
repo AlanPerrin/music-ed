@@ -1,46 +1,92 @@
 (in-package #:music-ed)
 
 
+(defparameter *qu1* "a")
+(defparameter *qu2* "b")
+(defparameter *qu3* "c")
+(defparameter *qu4* "d")
+
+(defparameter *progress* 0.0d0)
+
+(defun set-answer-list ()
+  (setf *qu1* (nth 0 *ans-list*))
+  (setf *qu2* (nth 1 *ans-list*))
+  (setf *qu3* (nth 2 *ans-list*))
+  (setf *qu4* (nth 3 *ans-list*))
+  )
+
 
 (defun interval-questions (app)
 ;; Close the previous window
   (close-previous-window)
   ;;make a new window
   (question-template)
+  (set-answer-list)
   (let ((intervalQs-win (gir:invoke (*gtk* "ApplicationWindow" 'new) app))
-	(hbox (gir:invoke (*gtk* "Box" 'new) 0 6 ))
-	(box (gir:invoke (*gtk* "Box" 'new) 1 6 ))
-	(media (gir:invoke (*gtk* "MediaControls" 'new)))
-	(separator (gir:invoke (*gtk* "Separator" 'new)0))
+	(grid (gir:invoke (*gtk* "Grid" 'new)))
+;	(separator (gir:invoke (*gtk* "Separator" 'new)0))
+	;;progress bar
+	(progress-bar (gir:invoke (*gtk* "ProgressBar" 'new)))
+	;;question buttons
+	(q1 (gir:invoke (*gtk* "ToggleButton" 'new-with-label) *qu1* ))
+	(q2 (gir:invoke (*gtk* "ToggleButton" 'new-with-label) *qu2* ))
+	(q3 (gir:invoke (*gtk* "ToggleButton" 'new-with-label) *qu3* ))
+	(q4 (gir:invoke (*gtk* "ToggleButton" 'new-with-label) *qu4* ))
+	;;==========
 	(play-button (gir:invoke (*gtk* "Button" 'new-with-label) "Play"))
 	(question (gir:invoke (*gtk* "Label" 'new)*question-text*))
-	(check1 (gir:invoke (*gtk* "CheckButton" 'new-with-label) "option 1"))
 	)
     
     (setf (window-title intervalQs-win) "Inverval Questions")
-    (setf (widget-size-request intervalQs-win) '(700 500))
+    (setf (widget-size-request intervalQs-win) '(500 300))
 
     ;Quesiton
     (setf (gir:property question 'margin-top)20
-	  (gir:property question 'margin-start)100)
-    (setf (gir:property play-button 'margin-top)20)
+	  (gir:property question 'margin-bottom)10
+	  (gir:property question 'margin-start)10)
 
+    ;play button
+
+    (setf(gir:property play-button 'margin-end)100)
+    
+    ;progress bar
+    (setf (gir:property progress-bar 'margin-top) 20)
+    (setf (gir:property progress-bar 'margin-bottom) 20)
+
+            ;; Set progress bar to be half complete
+    (gir:invoke (progress-bar 'set-fraction) *progress*)
+
+
+        ;; Group the Toggle buttons
+    (gir:invoke (q1 'set-group) q1)
+    (gir:invoke (q2 'set-group) q1)
+    (gir:invoke (q3 'set-group) q1)
+    (gir:invoke (q4 'set-group) q1)
+    
     ;Button
     (gir:connect play-button :clicked
                  (lambda (button)
 		   (declare (ignore button))
-                   (print "test")))
+                   (test-play-mp3)))
 
-;boxing
-    (box-append hbox question)
-    (box-append hbox play-button)
-    (box-append box media)
-    (box-append box hbox)
-    (box-append box separator)
-    (box-append box check1)
+      
+
+    ;; Pack the buttons and label into the grid
+    (gir:invoke (grid 'attach) question 0 0 3 1)
+    (gir:invoke (grid 'attach) play-button 1 1 2 1)
+    (gir:invoke (grid 'attach) progress-bar 0 2 4 1)
+  ;  (gir:invoke (grid 'attach) separator 0 2 4 1)
+    (gir:invoke (grid 'attach) q1 0 3 2 1)
+    (gir:invoke (grid 'attach) q2 2 3 2 1)
+    (gir:invoke (grid 'attach) q3 0 4 2 1)
+    (gir:invoke (grid 'attach) q4 2 4 2 1)
+    
+
+
+   
 
 ;setting window
-    (gir:invoke (intervalQs-win 'set-child) box)
+    (gir:invoke (intervalQs-win 'set-child) grid)
     (gir:invoke (intervalQs-win 'show))
     (setf *previous-window* intervalQs-win)))
 
