@@ -6,6 +6,8 @@
 (defparameter *qu4* "d")
 
 (defparameter *progress* 0.0d0)
+(defparameter *track* nil)
+
 
 (defun set-answer-list ()
   (setf *qu1* (nth 0 *ans-list*))
@@ -19,7 +21,7 @@
 ;; Close the previous window
   (close-previous-window)
   ;;make a new window
-  (question-template)
+  (que-remove-qus)
   (set-answer-list)
   (let ((intervalQs-win (gir:invoke (*gtk* "ApplicationWindow" 'new) app))
 	(grid (gir:invoke (*gtk* "Grid" 'new)))
@@ -90,7 +92,7 @@
     (gir:connect play-button :clicked
                  (lambda (button)
 		   (declare (ignore button))
-                   (test-play-mp3)))
+                   (play-mp3 *track*)))
 
       
 
@@ -142,12 +144,14 @@
 
 
 (defun My-list ()
-     (setq qreservoir( my-remv-dups(loop :for i :in *my-data*
+
+  (setq qreservoir( my-remv-dups(loop :for i :in *my-data*
 			    :collect(nth 1 i))))
-     (setf question-list (alexandria:shuffle *my-data*))
-     (setf *right-ans* (nth qnum (alexandria:iota (length question-list))))
-     (setq qRans (nth 1 (nth *right-ans* question-list)))	   
-     (setf qWans (remove qRans qreservoir :test #'equal))
+  (setf question-list (alexandria:shuffle *my-data*))
+  (setf *right-ans* (nth qnum (alexandria:iota (length question-list))))
+  (setq qRans (nth 1 (nth *right-ans* question-list)))	   
+  (setf qWans (remove qRans qreservoir :test #'equal))
+  (setq *track* (car (last (nth *right-ans* *my-data*))))
   )
 
 
@@ -159,8 +163,26 @@
     (alexandria:shuffle *ans-list*))
 
 
+(defun que-remove-qus ()
+  (if (= qnum 0)
+      (question-template)
+      (remove-last-q)
+      ))
+
+(defun remove-last-q ()
+  (setf *my-data* (remove (nth *right-ans* *my-data*) *my-data*))
+  (my-list)
+      (setf *Question-Text* (car (nth *right-ans* *my-data*)))
+    (setf *ans-list* (alexandria:flatten(list qrans(loop :for i :below 3 :collect (nth i qwans)))))
+    (alexandria:shuffle *ans-list*)
+  )
+      
+
+
+
 (defun Test-answer ()
   (if (equal *Q1* qrans)
       (incf MSCore)
       (format t "sorry the right answer was ~a" qrans)
       ))
+
