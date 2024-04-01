@@ -1,9 +1,7 @@
-
 (in-package #:music-ed)
 
-(defun gcse-menu (app)
-  ;reset scores
-  (reset-scores)
+
+(defun score-menu (app)
 ;; Close the previous window
   (close-previous-window)
 ;;make a new window
@@ -39,10 +37,3 @@
     (gir:invoke (new-window 'set-child) box)
     (gir:invoke (new-window 'show))
     (setf *previous-window* new-window)))
-
-
-
-(defun reset-scores ()
-  (setf qnum 0)
-  (setf *progress* 0.0d0)
-  (setf mscore 0))

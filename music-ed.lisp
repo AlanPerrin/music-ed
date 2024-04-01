@@ -7,6 +7,7 @@
 (defvar *gtk* (gir:ffi "Gtk" "4.0"))
 
 (defvar *previous-window* nil)
+(defparameter *icon-directory* "~/quicklisp/local-projects/music-ed/icons/48x48/icon.png")
 
 
 ;;main App
@@ -14,6 +15,8 @@
   (let ((app (gir:invoke (*gtk* "Application" 'new)
                          "My.GTK4.Tests"
                          (gir:nget *gio* "ApplicationFlags" :default-flags))))
+    ;(gir:invoke (app 'get-for-display) *icon-directory*)
+    
     (gir:connect app :activate 'menu)
     (gir:invoke (app 'run) nil)))
 
@@ -22,3 +25,6 @@
     (defun close-previous-window ()
       (when *previous-window*
         (gir:invoke (*previous-window* 'destroy))))
+
+
+

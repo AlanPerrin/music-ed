@@ -10,7 +10,7 @@
 (defvar Question-list nil)
 (defparameter *ans-list* nil)
 (defparameter Mix-question-list nil)
-(defparameter *Q1* 0)
+(defparameter *Q1* nil)
 (defparameter htQnA (make-hash-table))
 (defparameter *my-data* nil )
 (defparameter *answer* nil)

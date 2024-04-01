@@ -1,6 +1,5 @@
 (in-package #:music-ed)
 
-
 (defparameter *qu1* "a")
 (defparameter *qu2* "b")
 (defparameter *qu3* "c")
@@ -24,7 +23,6 @@
   (set-answer-list)
   (let ((intervalQs-win (gir:invoke (*gtk* "ApplicationWindow" 'new) app))
 	(grid (gir:invoke (*gtk* "Grid" 'new)))
-;	(separator (gir:invoke (*gtk* "Separator" 'new)0))
 	;;progress bar
 	(progress-bar (gir:invoke (*gtk* "ProgressBar" 'new)))
 	;;question buttons
@@ -35,10 +33,13 @@
 	;;==========
 	(play-button (gir:invoke (*gtk* "Button" 'new-with-label) "Play"))
 	(question (gir:invoke (*gtk* "Label" 'new)*question-text*))
+	(submit (gir:invoke (*gtk* "Button" 'new-with-label) "Submit"))
+
 	)
     
     (setf (window-title intervalQs-win) "Inverval Questions")
     (setf (widget-size-request intervalQs-win) '(500 300))
+
 
     ;Quesiton
     (setf (gir:property question 'margin-top)20
@@ -56,14 +57,36 @@
             ;; Set progress bar to be half complete
     (gir:invoke (progress-bar 'set-fraction) *progress*)
 
+    ;;Answer Buttons
+    (gir:connect q1 :clicked
+                 (lambda (button)
+                   (declare (ignore button))
+                   (setf *Q1* *qu1*)
+                   ))
+    (gir:connect q2 :clicked
+                 (lambda (button)
+                   (declare (ignore button))
+                   (setf *Q1* *qu2*)
+                   ))
+    (gir:connect q3 :clicked
+                 (lambda (button)
+                   (declare (ignore button))
+                   (setf *Q1* *qu3*)
+                   ))
+    (gir:connect q4 :clicked
+                 (lambda (button)
+                   (declare (ignore button))
+                   (setf *Q1* *qu4*)
+                   ))
+    
 
-        ;; Group the Toggle buttons
+    ;; Group the Toggle buttons
     (gir:invoke (q1 'set-group) q1)
     (gir:invoke (q2 'set-group) q1)
     (gir:invoke (q3 'set-group) q1)
     (gir:invoke (q4 'set-group) q1)
     
-    ;Button
+    ;Play Button
     (gir:connect play-button :clicked
                  (lambda (button)
 		   (declare (ignore button))
@@ -75,20 +98,30 @@
     (gir:invoke (grid 'attach) question 0 0 3 1)
     (gir:invoke (grid 'attach) play-button 1 1 2 1)
     (gir:invoke (grid 'attach) progress-bar 0 2 4 1)
-  ;  (gir:invoke (grid 'attach) separator 0 2 4 1)
     (gir:invoke (grid 'attach) q1 0 3 2 1)
     (gir:invoke (grid 'attach) q2 2 3 2 1)
     (gir:invoke (grid 'attach) q3 0 4 2 1)
     (gir:invoke (grid 'attach) q4 2 4 2 1)
+    (gir:invoke (grid 'attach) submit 1 5 4 1)
     
 
+    ;;submit
+    (setf (gir:property submit 'margin-top)20)
+        (gir:connect submit :clicked
+                 (lambda (button)
+		   (declare (ignore button))
+                   (test-answer)(incf Qnum)(window-destroy *previous-window*)(interval-questions app)))
 
    
 
 ;setting window
     (gir:invoke (intervalQs-win 'set-child) grid)
     (gir:invoke (intervalQs-win 'show))
-    (setf *previous-window* intervalQs-win)))
+    (setf *previous-window* intervalQs-win)
+    (when (= Qnum 5)
+      (window-destroy *previous-window*)(score-menu app))
+
+    ))
 
 
 
@@ -119,7 +152,6 @@
 
 
 (defun question-template ()
-    (setf *Q1* 0)
     (setf *my-data* (cdr(cl-csv:read-csv #P"questions/Question1.csv")))
     (My-list)
     (setf *Question-Text* (car (nth *right-ans* *my-data*)))
@@ -128,16 +160,7 @@
 
 
 (defun Test-answer ()
-    (setq *answer* (loop :for i :in *Q1*
-		       :collect (setq *answer* (gtk-toggle-button-active i))
-		       )
-	)
-    (setf *answer* (loop :for i :in *answer*
-		       :for j :below 4
-		       :do (if i (return j))))
-
-    (if (= (position qrans *ans-list*) *answer* )
-	(incf MScore)
-	(format t "Sorry the right answer was ~a " qrans)
-	))
-
+  (if (equal *Q1* qrans)
+      (incf MSCore)
+      (format t "sorry the right answer was ~a" qrans)
+      ))

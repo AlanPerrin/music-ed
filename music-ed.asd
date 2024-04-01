@@ -25,6 +25,7 @@
 	       (:file "audio-player")
 	       (:file "interval-questions")
                (:file "music-ed")
+	       (:file "Score-menu")
 	       (:module "questions")
 	;	:components
 	;	((:file "question1.csv")))
