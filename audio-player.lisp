@@ -5,9 +5,7 @@
 (defvar *out* (make-instance 'cl-out123:output))
 
 (defun play-mp3 (song)
-  (if (bt:thread-alive-p *last-play*)
-      (print "already playing")
-      (let* ((file (cl-mpg123:make-file (parse-namestring(concatenate 'string "~/quicklisp/local-projects/music-ed/questions/" song ".mp3"))))
+  (let* ((file (cl-mpg123:make-file (parse-namestring(concatenate 'string "~/quicklisp/local-projects/music-ed/questions/" song ".mp3"))))
          (out (make-instance 'cl-out123:output))
          )
     (cl-mpg123:connect file)
@@ -24,7 +22,7 @@
                          (return)
                          (cl-out123:play-directly out buffer bytes)))
                (sleep 0.1))))) ; Add a short delay to reduce CPU load
-    (values out *last-play*)))) ; Return the output and thread objects
+    (values out *last-play*))) ; Return the output and thread objects
 
 
 (defun stop-mp3 ()
