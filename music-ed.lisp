@@ -27,4 +27,16 @@
         (gir:invoke (*previous-window* 'destroy))))
 
 
+(defun debug-windows (win)
+  (setf mscore 3)
+  (setf qnum 3)
+  (let ((app (gir:invoke (*gtk* "Application" 'new)
+                         "My.GTK4.Tests"
+                         (gir:nget *gio* "ApplicationFlags" :default-flags))))
+    ;(gir:invoke (app 'get-for-display) *icon-directory*)
+    
+    (gir:connect app :activate win)
+    (gir:invoke (app 'run) nil)))
+
+
 

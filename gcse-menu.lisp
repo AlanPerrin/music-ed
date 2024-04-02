@@ -29,7 +29,7 @@
     (gir:connect back :clicked
                  (lambda (button)
 		   (declare (ignore button))
-                   (window-destroy new-window)))
+                   (window-destroy new-window)(menu app)))
 
 ;boxing
     (box-append box int-q)

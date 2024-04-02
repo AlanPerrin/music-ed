@@ -10,12 +10,12 @@
 
 
 (defun set-answer-list ()
+  (incf qnum)
   (setf *qu1* (nth 0 *ans-list*))
   (setf *qu2* (nth 1 *ans-list*))
   (setf *qu3* (nth 2 *ans-list*))
   (setf *qu4* (nth 3 *ans-list*))
   )
-
 
 (defun interval-questions (app)
 ;; Close the previous window
@@ -112,7 +112,7 @@
         (gir:connect submit :clicked
                  (lambda (button)
 		   (declare (ignore button))
-                   (test-answer)(incf Qnum)(window-destroy *previous-window*)(interval-questions app)))
+                   (stop-mp3)(test-answer)(window-destroy *previous-window*)(interval-questions app)))
 
    
 
@@ -121,7 +121,8 @@
     (gir:invoke (intervalQs-win 'show))
     (setf *previous-window* intervalQs-win)
     (when (= Qnum 5)
-      (window-destroy *previous-window*)(score-menu app))
+      (window-destroy *previous-window*)
+      (score-menu app))
 
     ))
 
@@ -177,8 +178,6 @@
     (alexandria:shuffle *ans-list*)
   )
       
-
-
 
 (defun Test-answer ()
   (if (equal *Q1* qrans)

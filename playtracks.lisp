@@ -13,7 +13,6 @@
 (defparameter *Q1* nil)
 (defparameter htQnA (make-hash-table))
 (defparameter *my-data* nil )
-(defparameter *answer* nil)
 (defparameter my-mix nil)
 (defparameter FTrack "~/quicklisp/local-projects/music-ed/questions/")
 (defparameter Tcheck nil)

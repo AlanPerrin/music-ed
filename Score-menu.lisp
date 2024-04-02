@@ -51,6 +51,7 @@
 
 
 (defun buildScore()
+  (decf qnum)
   (setf *content* (format nil "Your score is ~a out of ~a" mscore qnum))
   (setf *progress* (+ *progress* (/ mscore qnum)))
   )
