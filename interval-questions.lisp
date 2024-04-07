@@ -28,10 +28,10 @@
 	;;progress bar
 	(progress-bar (gir:invoke (*gtk* "ProgressBar" 'new)))
 	;;question buttons
-	(q1 (gir:invoke (*gtk* "ToggleButton" 'new-with-label) *qu1* ))
-	(q2 (gir:invoke (*gtk* "ToggleButton" 'new-with-label) *qu2* ))
-	(q3 (gir:invoke (*gtk* "ToggleButton" 'new-with-label) *qu3* ))
-	(q4 (gir:invoke (*gtk* "ToggleButton" 'new-with-label) *qu4* ))
+	(q1 (gir:invoke (*gtk* "CheckButton" 'new-with-label) *qu1* ))
+	(q2 (gir:invoke (*gtk* "CheckButton" 'new-with-label) *qu2* ))
+	(q3 (gir:invoke (*gtk* "CheckButton" 'new-with-label) *qu3* ))
+	(q4 (gir:invoke (*gtk* "CheckButton" 'new-with-label) *qu4* ))
 	;;==========
 	(play-button (gir:invoke (*gtk* "Button" 'new-with-label) "Play"))
 	(question (gir:invoke (*gtk* "Label" 'new)*question-text*))
@@ -41,6 +41,12 @@
     
     (setf (window-title intervalQs-win) "Inverval Questions")
     (setf (widget-size-request intervalQs-win) '(500 300))
+
+        ;; Group the Toggle buttons
+    (gir:invoke (q1 'set-group) q1)
+    (gir:invoke (q2 'set-group) q1)
+    (gir:invoke (q3 'set-group) q1)
+    (gir:invoke (q4 'set-group) q1)
 
 
     ;Quesiton
@@ -60,33 +66,28 @@
     (gir:invoke (progress-bar 'set-fraction) *progress*)
 
     ;;Answer Buttons
-    (gir:connect q1 :clicked
+    (gir:connect q1 :toggled
                  (lambda (button)
                    (declare (ignore button))
                    (setf *Q1* *qu1*)
                    ))
-    (gir:connect q2 :clicked
+    (gir:connect q2 :toggled
                  (lambda (button)
                    (declare (ignore button))
                    (setf *Q1* *qu2*)
                    ))
-    (gir:connect q3 :clicked
+    (gir:connect q3 :toggled
                  (lambda (button)
                    (declare (ignore button))
                    (setf *Q1* *qu3*)
                    ))
-    (gir:connect q4 :clicked
+    (gir:connect q4 :toggled
                  (lambda (button)
                    (declare (ignore button))
                    (setf *Q1* *qu4*)
                    ))
     
 
-    ;; Group the Toggle buttons
-    (gir:invoke (q1 'set-group) q1)
-    (gir:invoke (q2 'set-group) q1)
-    (gir:invoke (q3 'set-group) q1)
-    (gir:invoke (q4 'set-group) q1)
     
     ;Play Button
     (gir:connect play-button :clicked
