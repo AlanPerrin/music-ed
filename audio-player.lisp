@@ -26,9 +26,9 @@
 
 
 (defun stop-mp3 ()
-  (if (bt:thread-alive-p *last-play*)
-      (bt:destroy-thread *last-play*))
-  )
+  (cond ((equal *last-play* nil) (format t "nothing played ~%"))
+	((bt:thread-alive-p *last-play*)(bt:destroy-thread *last-play*))
+  ))
 
 ;========== The windows way
 
