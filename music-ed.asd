@@ -11,7 +11,6 @@
 	       #:alexandria
 	       #:cl-mpg123
 	       #:cl-out123
-	       #:deploy
 		)
 
   :components ((:file "package")
@@ -24,7 +23,7 @@
 	       (:file "Score-menu")
 	       (:module "questions")
 	       )
-  :build-operation "deploy-op"
+  :build-operation "program-op"
   :build-pathname "Build-test-App2"
   :entry-point "music-ed::main"
   )
