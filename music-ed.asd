@@ -11,8 +11,7 @@
 	       #:alexandria
 	       #:cl-mpg123
 	       #:cl-out123
-	       #+windows #:harmony
-	       #+windows #:cl-mixed-wasapi
+	       #:deploy
 		)
 
   :components ((:file "package")
@@ -25,7 +24,7 @@
 	       (:file "Score-menu")
 	       (:module "questions")
 	       )
-  :build-operation "program-op"
-  :build-pathname "Build-test-App"
+  :build-operation "deploy-op"
+  :build-pathname "Build-test-App2"
   :entry-point "music-ed::main"
   )
