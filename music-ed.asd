@@ -11,11 +11,8 @@
 	       #:alexandria
 	       #:cl-mpg123
 	       #:cl-out123
-	  ;     #:cl-gstreamer
-	  ;     #:harmony
-	    ;   #+linux #:cl-mixed-pulse
-	   ;    #+windows #:cl-mixed-wasapi
-	     ;  #:cl-mpg123
+	       #+windows #:harmony
+	       #+windows #:cl-mixed-wasapi
 		)
 
   :components ((:file "package")
@@ -27,6 +24,8 @@
                (:file "music-ed")
 	       (:file "Score-menu")
 	       (:module "questions")
-	;	:components
-	;	((:file "question1.csv")))
-	       ))
+	       )
+  :build-operation "program-op"
+  :build-pathname "Build-test-App"
+  :entry-point "music-ed::main"
+  )

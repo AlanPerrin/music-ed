@@ -30,4 +30,35 @@
       (bt:destroy-thread *last-play*))
   )
 
+;========== The windows way
+
+;#+windows
+;(defun M-server ()
+;    (org.shirakumo.fraf.harmony:maybe-start-simple-server)
+;    (incf cms))
+
+;defun servercheck ()
+;   (if (= 0 CMS )
+;	(m-server)))
+
+;defun PlayTrack ()
+;   (servercheck)
+;   (setq *track*
+;	  (let ((x (car (last(nth *right-ans* *my-data*)))))
+;	    (org.shirakumo.fraf.harmony:play (parse-namestring (concatenate 'string ftrack x ".mp3")))
+;	    ))
+;   )
+
+;defun Cstop ()
+;   (if *track*
+;	(mstop)
+;	(format t "first time playing"))
+;   )
+
+;defun Mstop () 
+;    (setf tcheck (subseq(format nil "~a" *track*) 8 12))
+;   (if (equal tcheck "DONE")
+;	(print "track finished")
+;	(org.shirakumo.fraf.harmony:stop *track*))
+; )
 
